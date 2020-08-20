@@ -11,5 +11,7 @@ public interface ICozinhaService {
 	List<Cozinha> listar();
 	
 	Cozinha buscar(Long id);
+	
+	void remover(Cozinha cozinha);
 
 }

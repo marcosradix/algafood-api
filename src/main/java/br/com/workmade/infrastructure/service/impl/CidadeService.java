@@ -1,5 +1,6 @@
 package br.com.workmade.infrastructure.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class CidadeService implements ICidadeService{
 	public Cidade salvar(Cidade cidade) {
 		Optional<Cidade> cozinhaToSave = Optional.of(cidade);
 		return this.cidadeRepository.save(cozinhaToSave.get());
+	}
+
+	@Override
+	public List<Cidade> listar() {
+		return this.cidadeRepository.findAll();
 	}
 	
 

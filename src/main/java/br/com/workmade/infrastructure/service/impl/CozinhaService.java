@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.workmade.domain.model.Cozinha;
 import br.com.workmade.domain.repository.CozinhaRepository;
+import br.com.workmade.exceptions.ObjectNotFoundException;
 import br.com.workmade.infrastructure.service.ICozinhaService;
 @Service
 public class CozinhaService implements ICozinhaService{
@@ -27,8 +28,15 @@ public class CozinhaService implements ICozinhaService{
 		
 	}
 
-	public Cozinha buscar(Long id) {
-		return this.cozinhaRepository.findById(id).orElseGet(()-> new Cozinha());
+	public Cozinha buscar(Long id){
+		Optional<Cozinha> cozinhaFound = this.cozinhaRepository.findById(id);
+		return cozinhaFound.orElseThrow( ()-> new ObjectNotFoundException("Não encontrado:".concat(""+id)) );
+	}
+
+	@Override
+	public void remover(Cozinha cozinha) {
+		this.cozinhaRepository.delete(cozinha);
+		
 	}
 
 }
