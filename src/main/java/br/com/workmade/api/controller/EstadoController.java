@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,15 +22,21 @@ public class EstadoController {
 	@Autowired
 	private EstadoService estadoService;
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<Estado> listar() {
 		log.info("listando estados..");
 		return this.estadoService.listar();
 	}
 
-	@PostMapping("/salvar")
+	@PostMapping
 	public Estado salvar(@RequestBody Estado estado) {
 		log.info("salvando estado..");
 		return this.estadoService.salvar(estado);
+	}
+	
+	@PutMapping
+	public Estado atualizar(@RequestBody Estado estado) {
+		log.info("atualizando cidade..");
+		return this.estadoService.atualizar(estado);
 	}
 }

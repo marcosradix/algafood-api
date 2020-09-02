@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,4 +33,10 @@ public class CidadeController {
 		log.info("salvando cidade..");
 		return this.cidadeService.salvar(cidade);
 	}
+	@PutMapping
+	public Cidade atualizar(@RequestBody Cidade cidade) {
+		log.info("atualizando cidade..");
+		return this.cidadeService.atualizar(cidade);
+	}
+	
 }

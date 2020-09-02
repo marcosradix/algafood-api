@@ -17,17 +17,18 @@ public class CozinhaService implements ICozinhaService{
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
+	@Override
 	public Cozinha salvar(Cozinha cozinha) {
 		Optional<Cozinha> cozinhaToSave = Optional.of(cozinha);
 		return this.cozinhaRepository.save(cozinhaToSave.get());
 		
 	}
-
+	@Override
 	public List<Cozinha> listar() {
 		return Optional.of(this.cozinhaRepository.findAll()).orElseGet(()-> new ArrayList< Cozinha>());
 		
 	}
-
+	@Override
 	public Cozinha buscar(Long id){
 		Optional<Cozinha> cozinhaFound = this.cozinhaRepository.findById(id);
 		return cozinhaFound.orElseThrow( ()-> new ObjectNotFoundException("Não encontrado:".concat(""+id)) );

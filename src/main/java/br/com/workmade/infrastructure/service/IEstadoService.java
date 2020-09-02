@@ -9,5 +9,9 @@ public interface IEstadoService {
 	Estado salvar(Estado estado);
 	
 	List<Estado> listar();
+	
+	Estado atualizar(Estado estado);
+	
+	Estado buscar(Long id);
 
 }

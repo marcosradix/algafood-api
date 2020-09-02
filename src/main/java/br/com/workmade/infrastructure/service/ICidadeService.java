@@ -8,6 +8,10 @@ public interface ICidadeService {
 	
 	Cidade salvar(Cidade cidade);
 	
+	Cidade atualizar(Cidade cidade);
+	
 	List<Cidade> listar();
+	
+	Cidade buscar(Long id);
 
 }
