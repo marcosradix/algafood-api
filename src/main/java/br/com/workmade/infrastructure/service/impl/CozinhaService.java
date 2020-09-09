@@ -39,5 +39,17 @@ public class CozinhaService implements ICozinhaService{
 		this.cozinhaRepository.delete(cozinha);
 		
 	}
-
+	@Override
+	public List<Cozinha> findTodasByNomeContaining(String nome) {
+		return this.cozinhaRepository.findTodasByNomeContaining(nome);
+	}
+	@Override
+	public Optional<Cozinha> findByNome(String nome) {
+		return this.cozinhaRepository.findByNome(nome);
+	}
+	@Override
+	public boolean existsByNome(String nome) {
+		return this.cozinhaRepository.existsByNome(nome);
+	}
+	
 }

@@ -1,6 +1,7 @@
 package br.com.workmade.api.controller;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.URI;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,15 +39,42 @@ public class RestauranteController {
 
 
 	@GetMapping
-	public List<Restaurante> listar() {
+	public ResponseEntity<List<Restaurante>> listar() {
 		log.info("listando restaurantes..");
-		return this.restauranteService.listar();
+		return ResponseEntity.ok(this.restauranteService.listar());
+	}
+	
+	@GetMapping("/top2-por-nome")
+	public ResponseEntity<List<Restaurante>> listarTop2(String nome) {
+		return ResponseEntity.ok(this.restauranteService.findTop2ByNomeContaining(nome));
+	}
+	
+	@GetMapping("/count-por-cozinha")
+	public ResponseEntity<Integer> countPorCozinha(Long cozinhaId) {
+		return ResponseEntity.ok(this.restauranteService.countByCozinhaId(cozinhaId));
+	}
+	
+	@GetMapping("/primeiro-por-nome")
+	public ResponseEntity<Restaurante> listarPrimeiroNome(String nome) {
+		return ResponseEntity.ok(this.restauranteService.findFirstRestauranteByNomeContaining(nome));
+	}
+	
+	@GetMapping("/por-taxa-frete")
+	public ResponseEntity<List<Restaurante>> listarPorTaxaFrete(BigDecimal taxaInicial,BigDecimal taxaFinal) {
+		log.info("listando restaurantes por taxa frete..");
+		return ResponseEntity.ok(this.restauranteService.findByTaxaFreteBetween(taxaInicial, taxaFinal));
 	}
 		
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Restaurante> buscar(@PathVariable Long id) {
 		log.info("listando restaurante por id..");
 		return ResponseEntity.ok(this.restauranteService.buscar(id));
+	}
+	
+	@GetMapping(value = "/por-nome")
+	public ResponseEntity<List<Restaurante>> buscarPorNome(@RequestParam String nome,@RequestParam Long cozinhaId) {
+		log.info("listando restaurante por id..");
+		return ResponseEntity.ok(this.restauranteService.findByNomeContainingAndCozinhaId(nome, cozinhaId));
 	}
 	
 	@DeleteMapping(value = "/{id}")

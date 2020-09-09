@@ -31,16 +31,22 @@ public class CozinhaController {
 
 
 	@GetMapping("/listar")
-	public List<Cozinha> listar() {
+	public ResponseEntity<List<Cozinha>> listar() {
 		log.info("listando cozinhas..");
-		return this.cozinhaService.listar();
+		return ResponseEntity.ok(this.cozinhaService.listar());
 	}
 	
-//	@GetMapping(value="/listar", produces = MediaType.APPLICATION_XML_VALUE)
-//	public ResponseEntity<CozinhasXmlWrapper> listarXml() {
-//		log.info("listando cozinhas..");
-//		return  ResponseEntity.ok(new CozinhasXmlWrapper(this.cozinhaService.listar()));
-//	}
+	@GetMapping("/exists")
+	public ResponseEntity<Boolean> existsPorNome(String nome) {
+		return ResponseEntity.ok(this.cozinhaService.existsByNome(nome));
+	}
+	
+	@GetMapping("/listar/por-nome")
+	public ResponseEntity<List<Cozinha>> listarPorNome(String nome) {
+		log.info("listando cozinhas..");
+		return ResponseEntity.ok(this.cozinhaService.findTodasByNomeContaining(nome));
+	}
+
 	
 	@GetMapping(value = "/listar/{id}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
