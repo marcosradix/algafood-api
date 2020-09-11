@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.com.workmade.domain.model.Restaurante;
@@ -45,7 +46,7 @@ public class RestauranteService implements IRestauranteService{
 
 	@Override
 	public List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinhaId) {
-		return this.restauranteRepository.findByNomeContainingAndCozinhaId(nome, cozinhaId);
+		return this.restauranteRepository.consultarPorNome(nome, cozinhaId);
 	}
 
 	@Override
@@ -64,5 +65,19 @@ public class RestauranteService implements IRestauranteService{
 		return this.restauranteRepository.countByCozinhaId(cozinhaId);
 	}
 
+	@Override
+	public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+		return this.restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
+	}
+
+	@Override
+	public List<Restaurante> findCriteria(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+		return this.restauranteRepository.findCriteria(nome, taxaFreteInicial, taxaFreteFinal);
+	}
+
+	@Override
+	public List<Restaurante> findAll(Specification<Restaurante> especifications) {
+		return this.restauranteRepository.findAll(especifications);
+	}
 
 }

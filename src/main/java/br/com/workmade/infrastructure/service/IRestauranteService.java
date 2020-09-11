@@ -3,6 +3,8 @@ package br.com.workmade.infrastructure.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
+
 import br.com.workmade.domain.model.Restaurante;
 
 public interface IRestauranteService {
@@ -24,5 +26,10 @@ public interface IRestauranteService {
 	List<Restaurante> findTop2ByNomeContaining(String nome);
 	
 	int countByCozinhaId(Long cozinhaId);
+	
+	 List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal);
+	
+	 List<Restaurante> findCriteria(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal);
+	 List<Restaurante> findAll(Specification<Restaurante> especifications);
 
 }

@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.workmade.domain.model.Restaurante;
+import br.com.workmade.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
+import br.com.workmade.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 import br.com.workmade.infrastructure.service.impl.RestauranteService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,6 +65,19 @@ public class RestauranteController {
 	public ResponseEntity<List<Restaurante>> listarPorTaxaFrete(BigDecimal taxaInicial,BigDecimal taxaFinal) {
 		log.info("listando restaurantes por taxa frete..");
 		return ResponseEntity.ok(this.restauranteService.findByTaxaFreteBetween(taxaInicial, taxaFinal));
+	}
+	
+	@GetMapping("/por-nome-e-frete")
+	public ResponseEntity<List<Restaurante>> listarPorTaxaNomeEFrete(String nome, BigDecimal taxaInicial,BigDecimal taxaFinal) {
+		return ResponseEntity.ok(this.restauranteService.findCriteria(nome, taxaInicial, taxaFinal));
+	}
+	
+	@GetMapping("/com-frete-gratis")
+	public ResponseEntity<List<Restaurante>> listarPorFreteGratis(String nome) {
+		var comFreteGratis = new RestauranteComFreteGratisSpec();
+		var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+		
+		return ResponseEntity.ok(this.restauranteService.findAll(comFreteGratis.and(comNomeSemelhante)));
 	}
 		
 	@GetMapping(value = "/{id}")
