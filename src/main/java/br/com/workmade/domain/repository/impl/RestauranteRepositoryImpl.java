@@ -1,5 +1,8 @@
 package br.com.workmade.domain.repository.impl;
 
+import static br.com.workmade.infrastructure.repository.spec.RestauranteSpecs.comFreteGratis;
+import static br.com.workmade.infrastructure.repository.spec.RestauranteSpecs.comNomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,14 +16,19 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import br.com.workmade.domain.model.Restaurante;
+import br.com.workmade.infrastructure.service.impl.RestauranteService;
 
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Autowired
+	private RestauranteService restauranteService;
 
 	@Override
 	public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
@@ -78,6 +86,10 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 		
 		TypedQuery<Restaurante> query =  manager.createQuery(criteria);
 		return query.getResultList();
+	}
+	@Override
+	public List<Restaurante> findComFreteGratis(String nome) {
+		return this.restauranteService.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 	}
 
 }

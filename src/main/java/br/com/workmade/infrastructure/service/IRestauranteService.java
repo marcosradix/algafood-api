@@ -31,5 +31,7 @@ public interface IRestauranteService {
 	
 	 List<Restaurante> findCriteria(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal);
 	 List<Restaurante> findAll(Specification<Restaurante> especifications);
+	 
+	 List<Restaurante> findComFreteGratis(String nome);
 
 }

@@ -80,4 +80,9 @@ public class RestauranteService implements IRestauranteService{
 		return this.restauranteRepository.findAll(especifications);
 	}
 
+	@Override
+	public List<Restaurante> findComFreteGratis(String nome) {
+		return this.restauranteRepository.findComFreteGratis(nome);
+	}
+
 }
