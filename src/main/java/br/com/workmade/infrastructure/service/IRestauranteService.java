@@ -2,6 +2,7 @@ package br.com.workmade.infrastructure.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -33,5 +34,7 @@ public interface IRestauranteService {
 	 List<Restaurante> findAll(Specification<Restaurante> especifications);
 	 
 	 List<Restaurante> findComFreteGratis(String nome);
+	 
+	 Optional<Restaurante> buscarPrimeiro();
 
 }

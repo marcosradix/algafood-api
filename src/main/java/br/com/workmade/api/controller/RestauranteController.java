@@ -75,6 +75,11 @@ public class RestauranteController {
 		return ResponseEntity.ok(this.restauranteService.findComFreteGratis(nome));
 	}
 	
+	@GetMapping("/primeiro")
+	public ResponseEntity<Restaurante> buscarPrimeiro() {
+		return ResponseEntity.ok(this.restauranteService.buscarPrimeiro().get());
+	}
+	
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Restaurante> buscar(@PathVariable Long id) {

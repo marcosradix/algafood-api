@@ -85,4 +85,9 @@ public class RestauranteService implements IRestauranteService{
 		return this.restauranteRepository.findComFreteGratis(nome);
 	}
 
+	@Override
+	public Optional<Restaurante> buscarPrimeiro() {
+		return this.restauranteRepository.buscarPrimeiro();
+	}
+
 }

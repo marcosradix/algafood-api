@@ -80,4 +80,8 @@ public class CozinhaController {
 		Cozinha cozinhaSalva = this.cozinhaService.salvar(cozinhaFound);
 		return ResponseEntity.ok().body(cozinhaSalva);
 	}
+	@GetMapping("/primeiro")
+	public ResponseEntity<Cozinha> buscarPrimeiro() {
+		return ResponseEntity.ok(this.cozinhaService.buscarPrimeiro());
+	}
 }

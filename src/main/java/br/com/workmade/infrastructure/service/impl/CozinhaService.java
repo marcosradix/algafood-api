@@ -51,5 +51,8 @@ public class CozinhaService implements ICozinhaService{
 	public boolean existsByNome(String nome) {
 		return this.cozinhaRepository.existsByNome(nome);
 	}
+	public Cozinha buscarPrimeiro() {
+		return this.cozinhaRepository.buscarPrimeiro().get();
+	}
 	
 }
