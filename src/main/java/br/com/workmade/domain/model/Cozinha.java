@@ -13,12 +13,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,5 +38,12 @@ public class Cozinha {
 	@JsonIgnore
 	@OneToMany(mappedBy = "cozinha", orphanRemoval = false)
 	private List<Restaurante> restaurantes;
+
+	@Override
+	public String toString() {
+		return "Cozinha [id=" + id + ", nome=" + nome;
+	}
+	
+	
 
 }

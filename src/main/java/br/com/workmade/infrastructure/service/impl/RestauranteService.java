@@ -19,8 +19,7 @@ public class RestauranteService implements IRestauranteService{
 	private RestauranteRepository restauranteRepository;
 
 	public Restaurante salvar(Restaurante restaurante) {
-		Optional<Restaurante> cozinhaToSave = Optional.of(restaurante);
-		return this.restauranteRepository.save(cozinhaToSave.get());
+		return this.restauranteRepository.save(restaurante);
 	}
 
 	@Override

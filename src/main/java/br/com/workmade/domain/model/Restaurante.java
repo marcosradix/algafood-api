@@ -1,9 +1,11 @@
 package br.com.workmade.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,12 +48,28 @@ public class Restaurante {
 	@ManyToOne
 	@JoinColumn(name="cozinha_id", nullable = false)
 	private Cozinha cozinha;
+	
+	@JsonIgnore
+	@Column(nullable = false, columnDefinition = "datetime")
+	@CreationTimestamp
+	private LocalDate dataCadastro;
+	
+	@JsonIgnore
+	@Column(nullable = false, columnDefinition = "datetime")
+	@UpdateTimestamp
+	private LocalDate dataAtualizacao;
 
-
+	  @JsonIgnore
 	  @ManyToMany
 	    @JoinTable(name="restaurante_pagamento", joinColumns=
 	    {@JoinColumn(name="restaurante_id")}, inverseJoinColumns=
 	      {@JoinColumn(name="pagamento_id")})
 	private List<FormaPagamento> formaPagamentos;
+	  
+	@JsonIgnore
+	@Embedded
+	private Endereco endereco;  
+	
+	
 
 }

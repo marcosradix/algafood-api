@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.workmade.domain.model.Cozinha;
 import br.com.workmade.domain.model.Restaurante;
+import br.com.workmade.infrastructure.service.impl.CozinhaService;
 import br.com.workmade.infrastructure.service.impl.RestauranteService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +38,9 @@ public class RestauranteController {
 
 	@Autowired
 	private RestauranteService restauranteService;
+	
+	@Autowired
+	private CozinhaService cozinhaService;
 
 	@GetMapping
 	public ResponseEntity<List<Restaurante>> listar() {
@@ -114,8 +119,15 @@ public class RestauranteController {
 	public ResponseEntity<Restaurante> atualizar(@RequestBody Restaurante restaurante, @PathVariable Long id) {
 		log.info("atualizando restaurante..");
 		Restaurante restauranteFound = this.restauranteService.buscar(id);
-
-		BeanUtils.copyProperties(restaurante, restauranteFound, "id");
+		
+		if(restaurante.getCozinha().getId() == restauranteFound.getCozinha().getId()) {
+			BeanUtils.copyProperties(restauranteFound.getCozinha(), restaurante.getCozinha());			
+		}else {
+			Cozinha cozinhaFound = cozinhaService.buscar(restaurante.getCozinha().getId());
+			BeanUtils.copyProperties(cozinhaFound, restaurante.getCozinha());	
+		}
+		
+		BeanUtils.copyProperties(restaurante, restauranteFound, "id", "formaPagamentos", "endereco", "dataCadastro");
 		Restaurante restauranteSalva = this.restauranteService.salvar(restauranteFound);
 		return ResponseEntity.ok().body(restauranteSalva);
 	}
