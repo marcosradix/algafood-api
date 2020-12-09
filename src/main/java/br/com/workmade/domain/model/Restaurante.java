@@ -52,7 +52,7 @@ public class Restaurante {
 	@UpdateTimestamp
 	private LocalDate dataAtualizacao;
 
-	  @JsonIgnore
+	  //@JsonIgnore
 	  @ManyToMany
 	    @JoinTable(name="restaurante_pagamento", joinColumns=
 	    {@JoinColumn(name="restaurante_id")}, inverseJoinColumns=

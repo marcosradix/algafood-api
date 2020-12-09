@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,8 @@ public interface RestauranteRepository extends CustomJpaRepository<Restaurante, 
 	//List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinhaId);
 	//JPQL
 	//@Query("from Restaurante where nome like %:nome% and cozinha.id = :cozinhaId")
+    @Query("from Restaurante r join r.cozinha left join fetch r.formaPagamentos")
+	List<Restaurante> findAll();
 	List<Restaurante> consultarPorNome(String nome, @Param("cozinhaId") Long cozinhaId);
 	
 	Optional<Restaurante> findFirstRestauranteByNomeContaining(String nome);
