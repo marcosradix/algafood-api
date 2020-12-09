@@ -32,10 +32,9 @@ public class Grupo {
 	
 	@Column(name="nome", nullable = false)
 	private String nome;
-	
 
 	  @ManyToMany
-	    @JoinTable(name="gurupo_permissao", joinColumns=
+	    @JoinTable(name="grupo_permissao", joinColumns=
 	    {@JoinColumn(name="grupo_id")}, inverseJoinColumns={@JoinColumn(name="permissao_id")})
 	private List<Permissao> permissoes;
 	
