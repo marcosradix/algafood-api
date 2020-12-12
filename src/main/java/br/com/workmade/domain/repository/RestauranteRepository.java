@@ -20,7 +20,7 @@ public interface RestauranteRepository extends CustomJpaRepository<Restaurante, 
 	//List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinhaId);
 	//JPQL
 	//@Query("from Restaurante where nome like %:nome% and cozinha.id = :cozinhaId")
-    @Query("from Restaurante r join r.cozinha left join fetch r.formaPagamentos")
+    @Query("from Restaurante r join r.cozinha")
 	List<Restaurante> findAll();
 	List<Restaurante> consultarPorNome(String nome, @Param("cozinhaId") Long cozinhaId);
 	
