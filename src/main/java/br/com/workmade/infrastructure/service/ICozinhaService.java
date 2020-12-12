@@ -13,8 +13,7 @@ public interface ICozinhaService {
 	
 	Cozinha buscar(Long id);
 	
-	void remover(Cozinha cozinha);
-	
+	void remover(Long cozinhaId);
 
 	List<Cozinha> findTodasByNomeContaining(String nome);
 	

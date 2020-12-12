@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.workmade.exceptions.EntidadeEmUsoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.workmade.domain.model.Cozinha;
@@ -16,7 +18,7 @@ public class CozinhaService implements ICozinhaService{
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+
 	@Override
 	public Cozinha salvar(Cozinha cozinha) {
 		Optional<Cozinha> cozinhaToSave = Optional.of(cozinha);
@@ -35,8 +37,14 @@ public class CozinhaService implements ICozinhaService{
 	}
 
 	@Override
-	public void remover(Cozinha cozinha) {
-		this.cozinhaRepository.delete(cozinha);
+	public void remover(Long cozinhaId) {
+		Cozinha cozinhaEncontrada = buscar(cozinhaId);
+		try {
+			this.cozinhaRepository.delete(cozinhaEncontrada);
+		}catch (DataIntegrityViolationException e){
+			throw new EntidadeEmUsoException("existe um relacionamento e por isso não pode apagar");
+		}
+
 		
 	}
 	@Override

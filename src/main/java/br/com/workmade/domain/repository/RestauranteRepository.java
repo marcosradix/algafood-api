@@ -16,7 +16,6 @@ import br.com.workmade.domain.repository.impl.RestauranteRepositoryQueries;
 public interface RestauranteRepository extends CustomJpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, JpaSpecificationExecutor<Restaurante> {
 	
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
-	
 	//List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinhaId);
 	//JPQL
 	//@Query("from Restaurante where nome like %:nome% and cozinha.id = :cozinhaId")
