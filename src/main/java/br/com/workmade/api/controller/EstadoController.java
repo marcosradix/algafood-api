@@ -25,6 +25,12 @@ public class EstadoController {
 		return ResponseEntity.ok(this.estadoService.listar());
 	}
 
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Estado> estadoPorId(@PathVariable Long id) {
+		log.info("listando estado por id..");
+		return ResponseEntity.ok(this.estadoService.buscar(id));
+	}
+
 	@PostMapping
 	public ResponseEntity<Estado> salvar(@RequestBody Estado estado) {
 		log.info("salvando estado..");

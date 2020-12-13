@@ -1,5 +1,6 @@
 package br.com.workmade.api.controller;
 
+import br.com.workmade.api.exceptionHandler.Problema;
 import br.com.workmade.domain.model.Cidade;
 import br.com.workmade.exceptions.EntidadeNaoEncontradaException;
 import br.com.workmade.exceptions.EstadoNaoEncontradoException;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,28 +37,25 @@ public class CidadeController {
 		return ResponseEntity.ok(this.cidadeService.buscar(id));
 	}
 
+	@DeleteMapping(value="/{id}")
+	public ResponseEntity<Void> apagarCidade(@PathVariable Long id) {
+		log.info("apagando cidade por id..");
+		this.cidadeService.remover(id);
+		return ResponseEntity.noContent().build();
+	}
+
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Cidade> salvar(@RequestBody Cidade cidade) {
 		log.info("salvando cidade..");
-		try {
-			return ResponseEntity.ok(this.cidadeService.salvar(cidade));
-		}catch (EstadoNaoEncontradoException e){
-			throw new NegocioException(e.getMessage());
-		}
+			return ResponseEntity.status(HttpStatus.CREATED).body(this.cidadeService.salvar(cidade));
 	}
 	@PutMapping(value = "/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Cidade> atualizar(@RequestBody Cidade cidade, @PathVariable Long id) {
 		log.info("atualizando cidade..");
 		cidade.setId(id);
 		Cidade cidadeEncontrada = cidadeService.buscar(id);
 		BeanUtils.copyProperties(cidade, cidadeEncontrada, "id");
-		try {
-			return ResponseEntity.ok(this.cidadeService.atualizar(cidadeEncontrada));
-		}catch (EstadoNaoEncontradoException e){
-			throw new NegocioException(e.getMessage());
-		}
+		return ResponseEntity.ok(this.cidadeService.atualizar(cidadeEncontrada));
 	}
-	
+
 }

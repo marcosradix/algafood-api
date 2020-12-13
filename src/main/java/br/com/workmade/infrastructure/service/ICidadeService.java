@@ -14,4 +14,6 @@ public interface ICidadeService {
 	
 	Cidade buscar(Long id);
 
+	void remover(Long id);
+
 }

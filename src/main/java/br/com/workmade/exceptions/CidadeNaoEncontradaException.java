@@ -8,6 +8,10 @@ public class CidadeNaoEncontradaException extends EntidadeNaoEncontradaException
 		super(msg);
 	}
 
+	public CidadeNaoEncontradaException(Long cidadeId) {
+		this(String.format("Cidade não encontrada com id: %d",cidadeId));
+	}
+
 	public CidadeNaoEncontradaException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
