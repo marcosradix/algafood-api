@@ -3,12 +3,9 @@ package br.com.workmade.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.workmade.domain.model.Estado;
 import br.com.workmade.infrastructure.service.impl.EstadoService;
@@ -23,20 +20,25 @@ public class EstadoController {
 	private EstadoService estadoService;
 
 	@GetMapping
-	public List<Estado> listar() {
+	public ResponseEntity<List<Estado>> listar() {
 		log.info("listando estados..");
-		return this.estadoService.listar();
+		return ResponseEntity.ok(this.estadoService.listar());
 	}
 
 	@PostMapping
-	public Estado salvar(@RequestBody Estado estado) {
+	public ResponseEntity<Estado> salvar(@RequestBody Estado estado) {
 		log.info("salvando estado..");
-		return this.estadoService.salvar(estado);
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.estadoService.salvar(estado));
 	}
 	
 	@PutMapping
-	public Estado atualizar(@RequestBody Estado estado) {
+	public ResponseEntity<Estado> atualizar(@RequestBody Estado estado) {
 		log.info("atualizando cidade..");
-		return this.estadoService.atualizar(estado);
+		return ResponseEntity.ok(this.estadoService.atualizar(estado));
+	}
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void>apagar(@PathVariable Long id){
+		 estadoService.apagar(id);
+		return ResponseEntity.noContent().build();
 	}
 }

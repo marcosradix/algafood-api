@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.workmade.exceptions.RestauranteNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class RestauranteService implements IRestauranteService{
 		return this.restauranteRepository.save(restaurante);
 	}
 
+	public Restaurante atualizar(Restaurante restaurante) {
+		buscar(restaurante.getId());
+		return this.restauranteRepository.save(restaurante);
+	}
+
 	@Override
 	public List<Restaurante> listar() {
 		return this.restauranteRepository.findAll();
@@ -29,11 +35,12 @@ public class RestauranteService implements IRestauranteService{
 
 	@Override
 	public Restaurante buscar(Long id) {
-		return this.restauranteRepository.findById(id).get();
+		return this.restauranteRepository.findById(id).orElseThrow(() -> new RestauranteNaoEncontradoException("restaurante não encontrado: "+id));
 	}
 
 	@Override
 	public void remover(Restaurante restaurante) {
+		buscar(restaurante.getId());
 		this.restauranteRepository.delete(restaurante);
 		
 	}

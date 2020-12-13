@@ -128,7 +128,7 @@ public class RestauranteController {
 		}
 		
 		BeanUtils.copyProperties(restaurante, restauranteFound, "id", "formaPagamentos", "endereco", "dataCadastro", "produtos");
-		Restaurante restauranteSalva = this.restauranteService.salvar(restauranteFound);
+		Restaurante restauranteSalva = this.restauranteService.atualizar(restauranteFound);
 		return ResponseEntity.ok().body(restauranteSalva);
 	}
 

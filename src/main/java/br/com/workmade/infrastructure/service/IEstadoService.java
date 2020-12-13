@@ -14,4 +14,6 @@ public interface IEstadoService {
 	
 	Estado buscar(Long id);
 
+	void apagar(Long id);
+
 }
