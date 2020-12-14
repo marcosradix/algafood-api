@@ -1,11 +1,6 @@
 package br.com.workmade.api.controller;
 
-import br.com.workmade.api.exceptionHandler.Problema;
 import br.com.workmade.domain.model.Cidade;
-import br.com.workmade.exceptions.EntidadeNaoEncontradaException;
-import br.com.workmade.exceptions.EstadoNaoEncontradoException;
-import br.com.workmade.exceptions.NegocioException;
-import br.com.workmade.exceptions.ObjectNotFoundException;
 import br.com.workmade.infrastructure.service.impl.CidadeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -53,9 +47,8 @@ public class CidadeController {
 	public ResponseEntity<Cidade> atualizar(@RequestBody Cidade cidade, @PathVariable Long id) {
 		log.info("atualizando cidade..");
 		cidade.setId(id);
-		Cidade cidadeEncontrada = cidadeService.buscar(id);
-		BeanUtils.copyProperties(cidade, cidadeEncontrada, "id");
-		return ResponseEntity.ok(this.cidadeService.atualizar(cidadeEncontrada));
+		Cidade cidadeAtualizada = this.cidadeService.atualizar(cidade);
+		return ResponseEntity.ok(cidadeAtualizada);
 	}
 
 }

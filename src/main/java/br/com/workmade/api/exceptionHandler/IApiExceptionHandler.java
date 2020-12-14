@@ -4,28 +4,33 @@ import br.com.workmade.exceptions.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 public interface IApiExceptionHandler {
 
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
-     ResponseEntity<?> tratarEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e);
+     ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e, WebRequest wr);
 
     @ExceptionHandler(NegocioException.class)
-     ResponseEntity<?> tratarNegocioException(NegocioException e);
+     ResponseEntity<?> handleNegocioException(NegocioException e, WebRequest wr);
 
     @ExceptionHandler(EntidadeEmUsoException.class)
-     ResponseEntity<?> tratarEntidadeEmUsoException(EntidadeEmUsoException e);
+     ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException e, WebRequest wr);
 
     @ExceptionHandler(CozinhaNaoEncontradoException.class)
-     ResponseEntity<?> tratarCozinhaNaoEncontradoException(CozinhaNaoEncontradoException e);
+     ResponseEntity<?> handleCozinhaNaoEncontradoException(CozinhaNaoEncontradoException e, WebRequest wr);
 
     @ExceptionHandler(EstadoNaoEncontradoException.class)
-    ResponseEntity<?> tratarEstadoNaoEncontradoException(EstadoNaoEncontradoException e);
+    ResponseEntity<?> handleEstadoNaoEncontradoException(EstadoNaoEncontradoException e, WebRequest wr);
 
     @ExceptionHandler(RestauranteNaoEncontradoException.class)
-    ResponseEntity<?> tratarRestauranteNaoEncontradoException(RestauranteNaoEncontradoException e);
+    ResponseEntity<?> handleRestauranteNaoEncontradoException(RestauranteNaoEncontradoException e, WebRequest wr);
 
     @ExceptionHandler(ProdutoNaoEncontradoException.class)
-    ResponseEntity<?> tratarProdutoNaoEncontradoException(ProdutoNaoEncontradoException e);
+    ResponseEntity<?> handleProdutoNaoEncontradoException(ProdutoNaoEncontradoException e, WebRequest wr);
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    ResponseEntity<?> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, WebRequest wr);
 
 }

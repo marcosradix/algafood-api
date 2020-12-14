@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
 import br.com.workmade.exceptions.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -58,11 +59,15 @@ public class CidadeService implements ICidadeService{
 
 	@Override
 	public Cidade atualizar(Cidade cidade) {
-		buscar(cidade.getId());
-		Optional<Cidade> cidadeToSave = Optional.of(cidade);
+
+		Cidade cidadeEncontrada = buscar(cidade.getId());
+		BeanUtils.copyProperties(cidade, cidadeEncontrada, "id");
+		Optional<Cidade> cidadeToSave = Optional.of(cidadeEncontrada);
 		try {
 			estadoService.buscar(cidade.getEstado().getId());
-			return this.cidadeRepository.save(cidadeToSave.get());
+			Cidade cidadeSalva = this.cidadeRepository.save(cidadeToSave.get());
+			cidadeSalva.setEstado(estadoService.buscar(cidadeSalva.getEstado().getId()));
+			return cidadeSalva;
 		}catch (EstadoNaoEncontradoException e){
 			throw new NegocioException(e.getMessage());
 		}
