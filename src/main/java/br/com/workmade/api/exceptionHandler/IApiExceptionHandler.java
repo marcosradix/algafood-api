@@ -10,27 +10,26 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public interface IApiExceptionHandler {
 
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
-     ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e, WebRequest wr);
+     ResponseEntity<?> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException e, WebRequest wr);
 
     @ExceptionHandler(NegocioException.class)
-     ResponseEntity<?> handleNegocioException(NegocioException e, WebRequest wr);
+     ResponseEntity<?> handleNegocio(NegocioException e, WebRequest wr);
 
     @ExceptionHandler(EntidadeEmUsoException.class)
-     ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException e, WebRequest wr);
+     ResponseEntity<?> handleEntidadeEmUso(EntidadeEmUsoException e, WebRequest wr);
 
     @ExceptionHandler(CozinhaNaoEncontradoException.class)
-     ResponseEntity<?> handleCozinhaNaoEncontradoException(CozinhaNaoEncontradoException e, WebRequest wr);
+     ResponseEntity<?> handleCozinhaNaoEncontrado(CozinhaNaoEncontradoException e, WebRequest wr);
 
     @ExceptionHandler(EstadoNaoEncontradoException.class)
-    ResponseEntity<?> handleEstadoNaoEncontradoException(EstadoNaoEncontradoException e, WebRequest wr);
+    ResponseEntity<?> handleEstadoNaoEncontrado(EstadoNaoEncontradoException e, WebRequest wr);
 
     @ExceptionHandler(RestauranteNaoEncontradoException.class)
-    ResponseEntity<?> handleRestauranteNaoEncontradoException(RestauranteNaoEncontradoException e, WebRequest wr);
+    ResponseEntity<?> handleRestauranteNaoEncontrado(RestauranteNaoEncontradoException e, WebRequest wr);
 
     @ExceptionHandler(ProdutoNaoEncontradoException.class)
-    ResponseEntity<?> handleProdutoNaoEncontradoException(ProdutoNaoEncontradoException e, WebRequest wr);
+    ResponseEntity<?> handleProdutoNaoEncontrado(ProdutoNaoEncontradoException e, WebRequest wr);
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    ResponseEntity<?> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, WebRequest wr);
+
 
 }
