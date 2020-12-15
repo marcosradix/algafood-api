@@ -30,7 +30,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
         Throwable rootCause = ExceptionUtils.getRootCause(ex);
         if (rootCause instanceof InvalidFormatException) {
             return handleInvalidFormat((InvalidFormatException) rootCause, headers, status, request);
-        }else if (rootCause instanceof PropertyBindingException) {
+        } else if (rootCause instanceof PropertyBindingException) {
             return handlePropertyBindingException((PropertyBindingException) rootCause, headers, status, request);
         }
         ProblemType problemType = ProblemType.CORPO_MAL_FORMATADO;
@@ -111,7 +111,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
     }
 
     private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+                                                                    HttpStatus status, WebRequest request) {
 
         ProblemType problemType = ProblemType.PARAMETRO_INVALIDO;
 
@@ -123,6 +123,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
+
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
                                                                    HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -131,7 +132,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
         String detail = String.format("O recurso '%s', que você tentou acessar, é inexistente.",
                 ex.getRequestURL());
 
-        Problem problem = createProblemBuilder(problemType,  status, detail).build();
+        Problem problem = createProblemBuilder(problemType, status, detail).build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
@@ -160,10 +161,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
         ProblemType problemType = ProblemType.CORPO_MAL_FORMATADO;
         String detail = String.format("A propriedade '%s' não existe. "
                 + "Corrija ou remova essa propriedade e tente novamente.", path);
-        Problem problem = createProblemBuilder(problemType, status,  detail).build();
+        Problem problem = createProblemBuilder(problemType, status, detail).build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
+
     private String joinPath(List<JsonMappingException.Reference> references) {
         return references.stream()
                 .map(ref -> ref.getFieldName())
