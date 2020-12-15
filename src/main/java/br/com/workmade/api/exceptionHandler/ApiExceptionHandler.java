@@ -13,6 +13,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
@@ -73,22 +74,30 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
 
     @Override
     public ResponseEntity<?> handleCozinhaNaoEncontrado(CozinhaNaoEncontradoException e, WebRequest wr) {
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, wr);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        Problem problem = createProblemBuilder(ProblemType.RECURSO_NAO_ENCONTRADO, status, e.getMessage()).build();
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, wr);
     }
 
     @Override
     public ResponseEntity<?> handleEstadoNaoEncontrado(EstadoNaoEncontradoException e, WebRequest wr) {
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, wr);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        Problem problem = createProblemBuilder(ProblemType.RECURSO_NAO_ENCONTRADO, status, e.getMessage()).build();
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, wr);
     }
 
     @Override
     public ResponseEntity<?> handleRestauranteNaoEncontrado(RestauranteNaoEncontradoException e, WebRequest wr) {
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, wr);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        Problem problem = createProblemBuilder(ProblemType.RECURSO_NAO_ENCONTRADO, status, e.getMessage()).build();
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, wr);
     }
 
     @Override
     public ResponseEntity<?> handleProdutoNaoEncontrado(ProdutoNaoEncontradoException e, WebRequest wr) {
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, wr);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        Problem problem = createProblemBuilder(ProblemType.RECURSO_NAO_ENCONTRADO, status, e.getMessage()).build();
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, wr);
     }
 
     @Override
@@ -114,7 +123,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
+                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
 
+        ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+        String detail = String.format("O recurso '%s', que você tentou acessar, é inexistente.",
+                ex.getRequestURL());
+
+        Problem problem = createProblemBuilder(problemType,  status, detail).build();
+
+        return handleExceptionInternal(ex, problem, headers, status, request);
+    }
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {

@@ -10,7 +10,8 @@ public enum ProblemType {
     ERRO_DE_PARSE_DE_DADOS("/erro-parse-de-dados", "Erro no parse de dados."),
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso"),
     ERRO_NEGOCIO("/erro-negocio", "Violação de regra de negócio"),
-    PARAMETRO_INVALIDO("/parametro-invalido", "Parâmetro de url inválido");
+    PARAMETRO_INVALIDO("/parametro-invalido", "Parâmetro de url inválido"),
+    RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado");
 
     private String title;
     private String uri;
