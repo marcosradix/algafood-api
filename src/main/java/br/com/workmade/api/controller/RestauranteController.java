@@ -19,6 +19,7 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.net.InetAddress;
@@ -102,7 +103,7 @@ public class RestauranteController {
     }
 
     @PostMapping
-    public ResponseEntity<Restaurante> salvar(@RequestBody Restaurante restaurante) {
+    public ResponseEntity<Restaurante> salvar(@RequestBody @Valid Restaurante restaurante) {
         log.info("salvando restaurante..");
         String getRemoteHostName = InetAddress.getLoopbackAddress().getHostName();
         Restaurante restauranteSalvo = this.restauranteService.salvar(restaurante);

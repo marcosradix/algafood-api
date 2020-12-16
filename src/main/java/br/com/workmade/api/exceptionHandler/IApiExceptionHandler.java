@@ -28,5 +28,8 @@ public interface IApiExceptionHandler {
     @ExceptionHandler(ProdutoNaoEncontradoException.class)
     ResponseEntity<?> handleProdutoNaoEncontrado(ProdutoNaoEncontradoException e, WebRequest wr);
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request);
+
 
 }

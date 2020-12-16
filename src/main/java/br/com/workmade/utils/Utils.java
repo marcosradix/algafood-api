@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 @Slf4j
@@ -56,6 +57,7 @@ public class Utils {
 
     public static Problem.ProblemBuilder createProblemBuilder(ProblemType type, HttpStatus status, String detail) {
         return Problem.builder()
+                .timestamp(LocalDateTime.now())
                 .status(status.value())
                 .type(type.getUri())
                 .title(type.getTitle())
