@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.workmade.domain.model.Cozinha;
+import br.com.workmade.domain.repository.CozinhaRepository;
 import br.com.workmade.exceptions.RestauranteNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,7 +21,13 @@ public class RestauranteService implements IRestauranteService{
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 
+	@Autowired
+	private CozinhaRepository cozinhaRepository;
+
 	public Restaurante salvar(Restaurante restaurante) {
+		Long cozinhaId = restaurante.getCozinha().getId();
+		Cozinha cozinha = cozinhaRepository.findById(cozinhaId).get();
+		restaurante.setCozinha(cozinha);
 		return this.restauranteRepository.save(restaurante);
 	}
 

@@ -1,5 +1,6 @@
 package br.com.workmade.api.controller;
 
+import br.com.workmade.Groups;
 import br.com.workmade.domain.model.Cozinha;
 import br.com.workmade.domain.model.Restaurante;
 import br.com.workmade.infrastructure.service.impl.CozinhaService;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,7 +114,7 @@ public class RestauranteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Restaurante> atualizar(@RequestBody Restaurante restaurante, @PathVariable Long id) {
+    public ResponseEntity<Restaurante> atualizar(@RequestBody @Valid Restaurante restaurante, @PathVariable Long id) {
         log.info("atualizando restaurante..");
         Restaurante restauranteFound = this.restauranteService.buscar(id);
 

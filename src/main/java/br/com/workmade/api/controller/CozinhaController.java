@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.InetAddress;
 import java.net.URI;
 import java.util.List;
@@ -55,7 +56,7 @@ public class CozinhaController {
     }
 
     @PostMapping("/salvar")
-    public ResponseEntity<Cozinha> salvar(@RequestBody Cozinha cozinha) {
+    public ResponseEntity<Cozinha> salvar(@RequestBody @Valid Cozinha cozinha) {
         log.info("salvando cozinha..");
         String getRemoteHostName = InetAddress.getLoopbackAddress().getHostName();
         Cozinha cozinhaSalva = this.cozinhaService.salvar(cozinha);
@@ -64,7 +65,7 @@ public class CozinhaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cozinha> atualizar(@RequestBody Cozinha cozinha, @PathVariable Long id) {
+    public ResponseEntity<Cozinha> atualizar(@RequestBody @Valid Cozinha cozinha, @PathVariable Long id) {
         log.info("atualizando cozinha..");
         Cozinha cozinhaFound = this.cozinhaService.buscar(id);
 
