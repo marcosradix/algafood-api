@@ -1,4 +1,4 @@
-package br.com.workmade;
+package br.com.workmade.core.validation;
 
 public interface Groups {
 

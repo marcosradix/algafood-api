@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static br.com.workmade.utils.Utils.createProblemBuilder;
@@ -30,6 +34,8 @@ import static br.com.workmade.utils.Utils.createProblemBuilder;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler implements IApiExceptionHandler {
 
+    @Autowired
+    private MessageSource messageSource;
 
     public static final String USER_MESSAGE = "Ocorreu um erro interno inesperado no sistema. "
             + "Tente novamente e se o problema persistir, entre em contato "
@@ -133,7 +139,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
 
         String detail = String.format("O parâmetro de URL '%s' recebeu o valor '%s', "
                         + "que é de um tipo inválido. Corrija e informe um valor compatível com o tipo %s.",
-                ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName());
+                ex.getName(), ex.getValue(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
 
         Problem problem = createProblemBuilder(problemType, status, detail).userMessage(detail).build();
 
@@ -187,7 +193,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
 
     private String joinPath(List<JsonMappingException.Reference> references) {
         return references.stream()
-                .map(ref -> ref.getFieldName())
+                .map(JsonMappingException.Reference::getFieldName)
                 .collect(Collectors.joining("."));
     }
 
@@ -196,8 +202,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
         BindingResult bindingResult = ex.getBindingResult();
         List<Field> fields = bindingResult.getFieldErrors()
                 .stream()
-                .map(fieldError
-                        -> Field.builder().name(fieldError.getField()).userMessage(fieldError.getDefaultMessage()).build())
+                .map(fieldError -> {
+                    String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+                    return Field.builder().name(fieldError.getField())
+                            .userMessage(message).build();
+
+                })
                 .collect(Collectors.toList());
 
         ProblemType problemType = ProblemType.DADOS_INVALIDOS;

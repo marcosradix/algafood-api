@@ -1,6 +1,6 @@
 package br.com.workmade.domain.model;
 
-import br.com.workmade.Groups;
+import br.com.workmade.core.validation.Groups;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,14 +22,15 @@ public class Cidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "O nome da cidade deve ser informado")
+    @NotBlank
     @Column(name = "nome", nullable = false)
     private String nome;
-    @NotNull(message = "O id do estado deve ser informado")
+
+    @NotNull
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "estado_id",nullable = false)
     private Estado estado;
 
 }

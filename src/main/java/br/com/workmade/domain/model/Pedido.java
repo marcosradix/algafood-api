@@ -41,11 +41,11 @@ public class Pedido {
     private LocalDateTime dataEntrega;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name ="forma_pagamento_id" ,nullable = false)
     private FormaPagamento formaPagamento;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name ="restaurante_id" ,nullable = false)
     private Restaurante restaurante;
 
     @ManyToOne

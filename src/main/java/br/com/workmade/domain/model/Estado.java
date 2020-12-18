@@ -1,6 +1,6 @@
 package br.com.workmade.domain.model;
 
-import br.com.workmade.Groups;
+import br.com.workmade.core.validation.Groups;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +20,7 @@ public class Estado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "O nome do estado deve ser informado")
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 

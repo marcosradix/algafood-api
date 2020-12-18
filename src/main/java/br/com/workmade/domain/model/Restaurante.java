@@ -10,7 +10,9 @@ import javax.validation.constraints.*;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
-import br.com.workmade.Groups;
+import br.com.workmade.core.validation.Groups;
+import br.com.workmade.core.validation.Multiplo;
+import br.com.workmade.core.validation.TaxaFrete;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -35,11 +37,14 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome do restaurante deve ser informado")
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 
-    @PositiveOrZero
+    @NotNull
+    //@PositiveOrZero
+    //@TaxaFrete
+    @Multiplo(numero = 5)
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
@@ -47,9 +52,9 @@ public class Restaurante {
     //@ManyToOne(fetch = FetchType.LAZY)
     @Valid
     @ConvertGroup(from = Default.class, to= Groups.CozinhaId.class)
-    @NotNull(message = "Você deve informar o id da cozinha")
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "cozinha_id", nullable = false)
+    @JoinColumn(name = "cozinha_id",nullable = false)
     private Cozinha cozinha;
 
     @JsonIgnore

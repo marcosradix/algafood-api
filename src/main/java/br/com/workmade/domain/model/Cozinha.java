@@ -1,6 +1,6 @@
 package br.com.workmade.domain.model;
 
-import br.com.workmade.Groups;
+import br.com.workmade.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -18,13 +18,13 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cozinha {
 
-    @NotNull(message = "Cozinha não pode ter um id nulo",groups = Groups.CozinhaId.class)
+    @NotNull(groups = Groups.CozinhaId.class)
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome da cozinha deve ser informado")
+    @NotBlank
     @Column(name = "nome", nullable = false)
     private String nome;
 
