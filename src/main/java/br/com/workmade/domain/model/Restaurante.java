@@ -1,29 +1,23 @@
 package br.com.workmade.domain.model;
 
+import br.com.workmade.core.validation.Groups;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
-
-import br.com.workmade.core.validation.Groups;
-import br.com.workmade.core.validation.Multiplo;
-import br.com.workmade.core.validation.TaxaFrete;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
+//@TaxaFreteZeroNomeContainsFreteGratis(sourceField="taxaFrete", targetField="nome", targetContains="Frete Grátis")
 @Entity
 @Data
 @Builder
@@ -42,9 +36,10 @@ public class Restaurante {
     private String nome;
 
     @NotNull
-    //@PositiveOrZero
+
     //@TaxaFrete
-    @Multiplo(numero = 5)
+    //@Multiplo(numero = 5)
+    @PositiveOrZero
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 

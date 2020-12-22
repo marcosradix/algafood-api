@@ -16,8 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
-
+import static br.com.workmade.core.utils.Utils.validate;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.lang.reflect.Field;
@@ -34,6 +35,9 @@ public class RestauranteController {
 
     @Autowired
     private RestauranteService restauranteService;
+
+    @Autowired
+    private SmartValidator validator;
 
     @Autowired
     private CozinhaService cozinhaService;
@@ -135,9 +139,12 @@ public class RestauranteController {
         Restaurante restauranteFound = this.restauranteService.buscar(id);
 
         mergeRestaurante(campos, restauranteFound, request);
+        validate(restauranteFound, "restaurante", this.validator);
         Restaurante restauranteSalvo = this.restauranteService.salvar(restauranteFound);
         return ResponseEntity.ok().body(restauranteSalvo);
     }
+
+
 
     private void mergeRestaurante(Map<String, Object> dadosOrigem, Restaurante restauranteDestino, HttpServletRequest request) {
         ServletServerHttpRequest servletServerHttpRequest = new ServletServerHttpRequest(request);

@@ -19,5 +19,5 @@ public class Problem {
 
     private String userMessage;
     private LocalDateTime timestamp;
-    private List<Field> fields;
+    private List<Field> objects;
 }
