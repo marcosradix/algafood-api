@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.workmade.exceptions.CozinhaNaoEncontradoException;
+import br.com.workmade.exceptions.CozinhaNaoEncontradaException;
 import br.com.workmade.exceptions.EntidadeEmUsoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.workmade.domain.model.Cozinha;
 import br.com.workmade.domain.repository.CozinhaRepository;
-import br.com.workmade.exceptions.ObjectNotFoundException;
 import br.com.workmade.infrastructure.service.ICozinhaService;
 @Service
 public class CozinhaService implements ICozinhaService{
@@ -36,7 +35,7 @@ public class CozinhaService implements ICozinhaService{
 	@Override
 	public Cozinha buscar(Long id){
 		Optional<Cozinha> cozinhaFound = this.cozinhaRepository.findById(id);
-		return cozinhaFound.orElseThrow( ()-> new CozinhaNaoEncontradoException(id) );
+		return cozinhaFound.orElseThrow( ()-> new CozinhaNaoEncontradaException(id) );
 	}
 
 	@Override

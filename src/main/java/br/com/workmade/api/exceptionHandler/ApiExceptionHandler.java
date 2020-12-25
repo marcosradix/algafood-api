@@ -91,7 +91,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler implemen
     }
 
     @Override
-    public ResponseEntity<?> handleCozinhaNaoEncontrado(CozinhaNaoEncontradoException e, WebRequest wr) {
+    public ResponseEntity<?> handleCozinhaNaoEncontrado(CozinhaNaoEncontradaException e, WebRequest wr) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         String detail = e.getMessage();
         Problem problem = createProblemBuilder(ProblemType.RECURSO_NAO_ENCONTRADO, status, detail).userMessage(detail).build();

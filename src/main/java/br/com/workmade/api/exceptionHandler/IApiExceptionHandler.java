@@ -1,10 +1,7 @@
 package br.com.workmade.api.exceptionHandler;
 
 import br.com.workmade.exceptions.*;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
@@ -19,8 +16,8 @@ public interface IApiExceptionHandler {
     @ExceptionHandler(EntidadeEmUsoException.class)
     ResponseEntity<?> handleEntidadeEmUso(EntidadeEmUsoException e, WebRequest wr);
 
-    @ExceptionHandler(CozinhaNaoEncontradoException.class)
-    ResponseEntity<?> handleCozinhaNaoEncontrado(CozinhaNaoEncontradoException e, WebRequest wr);
+    @ExceptionHandler(CozinhaNaoEncontradaException.class)
+    ResponseEntity<?> handleCozinhaNaoEncontrado(CozinhaNaoEncontradaException e, WebRequest wr);
 
     @ExceptionHandler(EstadoNaoEncontradoException.class)
     ResponseEntity<?> handleEstadoNaoEncontrado(EstadoNaoEncontradoException e, WebRequest wr);
