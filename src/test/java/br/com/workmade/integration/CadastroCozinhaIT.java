@@ -39,7 +39,7 @@ public class CadastroCozinhaIT {
 	public void deve_falhar_quando_cadastrar_cozinha_sem_nome(){
 		var cozinha = new Cozinha();
 		cozinha.setNome(null);
-		Cozinha cozinhaSalva = cozinhaService.salvar(cozinha);
+		cozinhaService.salvar(cozinha);
 
 	}
 	@Test(expected = EntidadeEmUsoException.class)
